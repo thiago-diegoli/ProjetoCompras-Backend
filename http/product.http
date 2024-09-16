@@ -1,0 +1,95 @@
+@baseURL = https://projeto-mvc-restful-server.vercel.app/api/products
+@accessToken = ?
+@adminAccessToken = ?
+
+
+# Obtém todos os produtos do usuário autenticado
+GET {{baseURL}}/
+Content-Type: application/json
+access-token: {{accessToken}}
+
+# Explicação:
+# Este endpoint retorna todos os produtos do usuário autenticado. 
+# O token de acesso é necessário para autenticação.
+
+###
+# Obtém todos os produtos, requer permissão de administrador
+GET {{baseURL}}/all
+Content-Type: application/json
+access-token: {{adminAccessToken}}
+
+# Explicação:
+# Este endpoint retorna todos os produtos de todos os usuários. 
+# É necessário ter permissões de administrador.
+
+###
+# Cria um novo produto
+POST {{baseURL}}
+Content-Type: application/json
+access-token: {{accessToken}}
+
+{
+    "nome": "Bolas de Futebol",
+    "tipo": "material-de-consumo",
+    "quantidade": 25,
+    "categoria": "materiais-esportivos-educacao-fisica",
+    "descricao": "Bolas de futebol para as aulas de educação física"
+}
+
+# Explicação:
+# Este endpoint permite a criação de um novo produto. 
+# É necessário fornecer o token de acesso do usuário e os detalhes do produto.
+
+###
+# Deleta um produto específico
+DELETE {{baseURL}}/60b7285f5f9b2a2e88d7ef84
+Content-Type: application/json
+access-token: {{accessToken}}
+
+# Explicação:
+# Este endpoint permite a exclusão de um produto pelo seu ID.
+# O token de acesso do usuário é necessário, e o produto só pode ser excluído se tiver o status "Pendente".
+
+###
+# Atualiza um produto específico
+PUT {{baseURL}}
+Content-Type: application/json
+access-token: {{accessToken}}
+
+{
+    "_id": "60b7285f5f9b2a2e88d7ef84",
+    "nome": "Bolas de Futebol Modificadas",
+    "tipo": "material-de-consumo",
+    "quantidade": 30,
+    "categoria": "materiais-esportivos-educacao-fisica",
+    "descricao": "Bolas de futebol para as aulas de educação física, agora modificadas"
+}
+
+# Explicação:
+# Este endpoint permite a atualização de um produto existente.
+# O ID do produto é necessário e deve ser passado no corpo da requisição.
+
+###
+# Atualiza o status de um produto específico (requer permissão de administrador)
+PUT {{baseURL}}/aprove/60b7285f5f9b2a2e88d7ef84
+Content-Type: application/json
+access-token: {{adminAccessToken}}
+
+{
+    "status": "Aprovado",
+    "justificativa": "Produto necessário para eventos escolares."
+}
+
+# Explicação:
+# Este endpoint permite a atualização do status de um produto.
+# O token de acesso do administrador é necessário para realizar esta operação.
+
+###
+# Filtra produtos com base em parâmetros de consulta
+GET {{baseURL}}/products?dataMin=2024-01-01&dataMax=2024-12-31&nome=bola&status=Pendente
+Content-Type: application/json
+access-token: {{accessToken}}
+
+# Explicação:
+# Este endpoint permite filtrar produtos com base em vários parâmetros.
+# Os filtros incluem data mínima e máxima, nome do produto, status, entre outros.
