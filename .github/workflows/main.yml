@@ -1,0 +1,25 @@
+name: Projeto Compras Backend
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configurando Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Instalando dependências
+        run: npm install
